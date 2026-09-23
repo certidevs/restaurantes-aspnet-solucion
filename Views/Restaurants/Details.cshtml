@@ -5,7 +5,19 @@
 
 <div class="d-flex justify-content-between align-items-center mb-3">
     <h1 class="mb-0">@Model.Name</h1>
-    <a class="btn btn-primary" asp-action="Edit" asp-route-id="@Model.Id">Editar</a>
+    <div class="d-flex gap-2">
+        <a class="btn btn-primary" asp-action="Edit" asp-route-id="@Model.Id">Editar</a>
+        @if (Model.Active)
+        {
+            <form asp-action="Deactivate" asp-route-id="@Model.Id" method="post">
+                <button class="btn btn-warning" type="submit">Desactivar</button>
+            </form>
+        }
+        <form asp-action="Delete" asp-route-id="@Model.Id" method="post"
+              onsubmit="return confirm('¿Seguro que quieres borrar este restaurante? Se borrarán también sus platos, empleados y reseñas.');">
+            <button class="btn btn-danger" type="submit">Borrar</button>
+        </form>
+    </div>
 </div>
 
 <dl class="row">

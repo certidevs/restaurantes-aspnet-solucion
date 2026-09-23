@@ -97,4 +97,36 @@ public class RestaurantsController : Controller
         TempData["Message"] = "Restaurante guardado correctamente.";
         return RedirectToAction("Details", new { id = restaurant.Id });
     }
+
+    [HttpPost]
+    public IActionResult Deactivate(int id)
+    {
+        var restaurant = context.Restaurants.Find(id);
+        if (restaurant == null)
+        {
+            return NotFound();
+        }
+
+        restaurant.Active = false;
+        context.SaveChanges();
+
+        TempData["Message"] = "Restaurante desactivado.";
+        return RedirectToAction("Details", new { id });
+    }
+
+    [HttpPost]
+    public IActionResult Delete(int id)
+    {
+        var restaurant = context.Restaurants.Find(id);
+        if (restaurant == null)
+        {
+            return NotFound();
+        }
+
+        context.Restaurants.Remove(restaurant);
+        context.SaveChanges();
+
+        TempData["Message"] = "Restaurante borrado.";
+        return RedirectToAction("Index");
+    }
 }
