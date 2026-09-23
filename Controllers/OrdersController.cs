@@ -125,6 +125,32 @@ public class OrdersController : Controller
         return RedirectToAction("Details", new { id = orderId });
     }
 
+    [HttpPost]
+    public IActionResult Finish(int orderId, int? tableNumber, int? numPeople, double? tip)
+    {
+        var order = FindOpenOrder(orderId);
+        if (order == null)
+        {
+            return NotFound();
+        }
+
+        if (order.Lines.Count == 0)
+        {
+            TempData["Error"] = "Añade al menos un plato antes de finalizar el pedido.";
+            return RedirectToAction("Details", new { id = orderId });
+        }
+
+        order.TableNumber = tableNumber;
+        order.NumPeople = numPeople;
+        order.Tip = tip;
+        order.Status = OrderStatus.Completed;
+        context.SaveChanges();
+
+        UpdateTotal(order.Id);
+        TempData["Message"] = "Pedido finalizado. ¡Que aproveche!";
+        return RedirectToAction("Details", new { id = orderId });
+    }
+
     private Order? FindOpenOrder(int orderId)
     {
         var userId = User.GetRequiredUserId();

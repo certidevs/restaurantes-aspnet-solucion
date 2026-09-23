@@ -71,6 +71,31 @@
     </tfoot>
 </table>
 
+@if (Model.Status == OrderStatus.InProgress)
+{
+    <form asp-action="Finish" method="post" class="card card-body mb-4">
+        <h2 class="h5">Finalizar pedido</h2>
+        <input type="hidden" name="orderId" value="@Model.Id" />
+        <div class="row g-2 align-items-end">
+            <div class="col-md-3">
+                <label class="form-label" for="tableNumber">Mesa</label>
+                <input class="form-control" id="tableNumber" name="tableNumber" type="number" min="1" />
+            </div>
+            <div class="col-md-3">
+                <label class="form-label" for="numPeople">Comensales</label>
+                <input class="form-control" id="numPeople" name="numPeople" type="number" min="1" />
+            </div>
+            <div class="col-md-3">
+                <label class="form-label" for="tip">Propina (€)</label>
+                <input class="form-control" id="tip" name="tip" type="number" step="0.01" min="0" />
+            </div>
+            <div class="col-md-3">
+                <button class="btn btn-success w-100" type="submit">Finalizar pedido</button>
+            </div>
+        </div>
+    </form>
+}
+
 @if (ViewBag.Dishes != null)
 {
     <h2 class="h4 mt-4">Añadir platos</h2>
