@@ -1,0 +1,47 @@
+@model Dish
+@{
+    ViewData["Title"] = Model.Id == 0 ? "Nuevo plato" : "Editar plato";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<form asp-action="Save" method="post" class="col-lg-8">
+    <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+    <input type="hidden" asp-for="Id" />
+
+    <div class="mb-3">
+        <label class="form-label" asp-for="RestaurantId">Restaurante</label>
+        <select class="form-select" asp-for="RestaurantId" asp-items="ViewBag.Restaurants"></select>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label" asp-for="Name">Nombre</label>
+        <input class="form-control" asp-for="Name" />
+        <span class="text-danger" asp-validation-for="Name"></span>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label" asp-for="Description">Descripción</label>
+        <textarea class="form-control" asp-for="Description" rows="3"></textarea>
+        <span class="text-danger" asp-validation-for="Description"></span>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <label class="form-label" asp-for="Price">Precio (€)</label>
+            <input class="form-control" asp-for="Price" type="number" step="0.01" />
+            <span class="text-danger" asp-validation-for="Price"></span>
+        </div>
+        <div class="col-md-6 mb-3">
+            <label class="form-label" asp-for="DishType">Tipo</label>
+            <select class="form-select" asp-for="DishType" asp-items="Html.GetEnumSelectList<DishType>()"></select>
+        </div>
+    </div>
+
+    <button class="btn btn-primary" type="submit">Guardar</button>
+    <a class="btn btn-outline-secondary" asp-action="Index">Cancelar</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
