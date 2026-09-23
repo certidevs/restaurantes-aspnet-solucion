@@ -4,6 +4,32 @@
 }
 
 <h1>Restaurantes</h1>
+
+<form method="get" asp-action="Index" class="row g-2 align-items-end mb-3">
+    <div class="col-md-4">
+        <label class="form-label" for="search">Nombre</label>
+        <input class="form-control" id="search" name="search" value="@ViewBag.Search" placeholder="Buscar por nombre" />
+    </div>
+    <div class="col-md-3">
+        <label class="form-label" for="foodType">Tipo de cocina</label>
+        <select class="form-select" id="foodType" name="foodType">
+            <option value="">Todas</option>
+            @foreach (var type in Enum.GetValues<FoodType>())
+            {
+                <option value="@type" selected="@(type == ViewBag.FoodType)">@Html.DisplayFor(m => type)</option>
+            }
+        </select>
+    </div>
+    <div class="col-md-2">
+        <label class="form-label" for="maxPrice">Precio máximo</label>
+        <input class="form-control" id="maxPrice" name="maxPrice" type="number" step="0.01" value="@ViewBag.MaxPrice" />
+    </div>
+    <div class="col-md-3">
+        <button class="btn btn-primary" type="submit">Filtrar</button>
+        <a class="btn btn-outline-secondary" asp-action="Index">Limpiar</a>
+    </div>
+</form>
+
 <p>Hay @Model.Count restaurantes.</p>
 
 <table class="table table-striped">

@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RestaurantesAspNet.Data;
+using RestaurantesAspNet.Models;
 
 namespace RestaurantesAspNet.Controllers;
 
@@ -13,9 +14,30 @@ public class RestaurantsController : Controller
         this.context = context;
     }
 
-    public IActionResult Index()
+    public IActionResult Index(string? search, FoodType? foodType, double? maxPrice)
     {
-        var restaurants = context.Restaurants.ToList();
+        var query = context.Restaurants.AsQueryable();
+
+        if (!string.IsNullOrWhiteSpace(search))
+        {
+            query = query.Where(r => r.Name.ToLower().Contains(search.ToLower()));
+        }
+
+        if (foodType != null)
+        {
+            query = query.Where(r => r.FoodType == foodType);
+        }
+
+        if (maxPrice != null)
+        {
+            query = query.Where(r => r.AveragePrice <= maxPrice);
+        }
+
+        ViewBag.Search = search;
+        ViewBag.FoodType = foodType;
+        ViewBag.MaxPrice = maxPrice;
+
+        var restaurants = query.OrderBy(r => r.Name).ToList();
         return View(restaurants);
     }
 
