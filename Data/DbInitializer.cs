@@ -50,7 +50,23 @@ public static class DbInitializer
             context.SaveChanges();
         }
 
+        if (!context.Employees.Any())
+        {
+            var casaPepe = context.Restaurants.First(r => r.Name == "Casa Pepe");
+            var sushiZen = context.Restaurants.First(r => r.Name == "Sushi Zen");
+            var trattoria = context.Restaurants.First(r => r.Name == "La Trattoria");
+
+            context.Employees.AddRange(
+                new Employee { FirstName = "Lucía", LastName = "Martínez", Dni = "12345678A", Age = 29, Restaurant = casaPepe },
+                new Employee { FirstName = "Javier", LastName = "Gómez", Dni = "23456789B", Age = 41, Restaurant = casaPepe },
+                new Employee { FirstName = "Yuki", LastName = "Tanaka", Dni = "34567890C", Age = 35, Restaurant = sushiZen },
+                new Employee { FirstName = "Marco", LastName = "Rossi", Dni = "45678901D", Age = 38, Restaurant = trattoria },
+                new Employee { FirstName = "Ana", LastName = "López", Age = 24, Restaurant = trattoria });
+            context.SaveChanges();
+        }
+
         Console.WriteLine($"Restaurantes en la base de datos: {context.Restaurants.Count()}");
+        Console.WriteLine($"Empleados en la base de datos: {context.Employees.Count()}");
     }
 
     private static async Task EnsureRoleAsync(RoleManager<IdentityRole> roleManager, string roleName)

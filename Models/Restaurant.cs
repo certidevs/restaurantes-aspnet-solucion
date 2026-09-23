@@ -9,4 +9,6 @@ public class Restaurant
     public int? NumberEmployees { get; set; }
     public DateOnly? StartDate { get; set; }
     public FoodType? FoodType { get; set; }
+
+    public List<Employee> Employees { get; set; } = new();
 }
