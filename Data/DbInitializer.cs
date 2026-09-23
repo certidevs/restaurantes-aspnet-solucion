@@ -65,8 +65,32 @@ public static class DbInitializer
             context.SaveChanges();
         }
 
+        if (!context.Dishes.Any())
+        {
+            var casaPepe = context.Restaurants.First(r => r.Name == "Casa Pepe");
+            var sushiZen = context.Restaurants.First(r => r.Name == "Sushi Zen");
+            var trattoria = context.Restaurants.First(r => r.Name == "La Trattoria");
+            var rincon = context.Restaurants.First(r => r.Name == "El Rincón Asturiano");
+
+            context.Dishes.AddRange(
+                new Dish { Name = "Croquetas de jamón", Description = "Ocho croquetas caseras", Price = 9.5, DishType = DishType.Starter, Restaurant = casaPepe },
+                new Dish { Name = "Paella de marisco", Description = "Para dos personas", Price = 32, DishType = DishType.MainCourse, Restaurant = casaPepe },
+                new Dish { Name = "Tarta de queso", Price = 6, DishType = DishType.Dessert, Restaurant = casaPepe },
+                new Dish { Name = "Gyozas", Description = "Seis empanadillas a la plancha", Price = 8, DishType = DishType.Starter, Restaurant = sushiZen },
+                new Dish { Name = "Menú de sushi", Description = "Doce piezas variadas", Price = 24, DishType = DishType.MainCourse, Restaurant = sushiZen },
+                new Dish { Name = "Mochi de té verde", Price = 5.5, DishType = DishType.Dessert, Restaurant = sushiZen },
+                new Dish { Name = "Burrata", Description = "Con tomate y albahaca", Price = 11, DishType = DishType.Starter, Restaurant = trattoria },
+                new Dish { Name = "Pizza margarita", Price = 12, DishType = DishType.MainCourse, Restaurant = trattoria },
+                new Dish { Name = "Tiramisú", Price = 6.5, DishType = DishType.Dessert, Restaurant = trattoria },
+                new Dish { Name = "Fabada asturiana", Description = "Con compango", Price = 16, DishType = DishType.MainCourse, Restaurant = rincon },
+                new Dish { Name = "Cachopo", Description = "De ternera con jamón y queso", Price = 22, DishType = DishType.MainCourse, Restaurant = rincon },
+                new Dish { Name = "Arroz con leche", Price = 5, DishType = DishType.Dessert, Restaurant = rincon });
+            context.SaveChanges();
+        }
+
         Console.WriteLine($"Restaurantes en la base de datos: {context.Restaurants.Count()}");
         Console.WriteLine($"Empleados en la base de datos: {context.Employees.Count()}");
+        Console.WriteLine($"Platos en la base de datos: {context.Dishes.Count()}");
     }
 
     private static async Task EnsureRoleAsync(RoleManager<IdentityRole> roleManager, string roleName)

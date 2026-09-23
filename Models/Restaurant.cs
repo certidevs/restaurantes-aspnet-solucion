@@ -11,4 +11,5 @@ public class Restaurant
     public FoodType? FoodType { get; set; }
 
     public List<Employee> Employees { get; set; } = new();
+    public List<Dish> Dishes { get; set; } = new();
 }
