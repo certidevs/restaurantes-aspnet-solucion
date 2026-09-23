@@ -1,0 +1,45 @@
+@model Restaurant
+@{
+    ViewData["Title"] = Model.Id == 0 ? "Nuevo restaurante" : "Editar restaurante";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<form asp-action="Save" method="post" class="col-lg-8">
+    <input type="hidden" asp-for="Id" />
+
+    <div class="mb-3">
+        <label class="form-label" asp-for="Name">Nombre</label>
+        <input class="form-control" asp-for="Name" />
+    </div>
+
+    <div class="row">
+        <div class="col-md-4 mb-3">
+            <label class="form-label" asp-for="AveragePrice">Precio medio (€)</label>
+            <input class="form-control" asp-for="AveragePrice" type="number" step="0.01" />
+        </div>
+        <div class="col-md-4 mb-3">
+            <label class="form-label" asp-for="NumberEmployees">Empleados</label>
+            <input class="form-control" asp-for="NumberEmployees" />
+        </div>
+        <div class="col-md-4 mb-3">
+            <label class="form-label" asp-for="StartDate">Fecha de apertura</label>
+            <input class="form-control" asp-for="StartDate" type="date" asp-format="{0:yyyy-MM-dd}" />
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label" asp-for="FoodType">Tipo de cocina</label>
+        <select class="form-select" asp-for="FoodType" asp-items="Html.GetEnumSelectList<FoodType>()">
+            <option value="">Selecciona un tipo</option>
+        </select>
+    </div>
+
+    <div class="form-check form-switch mb-3">
+        <input class="form-check-input" asp-for="Active" />
+        <label class="form-check-label" asp-for="Active">Activo</label>
+    </div>
+
+    <button class="btn btn-primary" type="submit">Guardar</button>
+    <a class="btn btn-outline-secondary" asp-action="Index">Cancelar</a>
+</form>

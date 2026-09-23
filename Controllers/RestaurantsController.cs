@@ -55,4 +55,21 @@ public class RestaurantsController : Controller
 
         return View(restaurant);
     }
+
+    [HttpGet]
+    public IActionResult Create()
+    {
+        var restaurant = new Restaurant { Active = true };
+        return View("Form", restaurant);
+    }
+
+    [HttpPost]
+    public IActionResult Save(Restaurant restaurant)
+    {
+        context.Restaurants.Add(restaurant);
+        context.SaveChanges();
+
+        TempData["Message"] = "Restaurante guardado correctamente.";
+        return RedirectToAction("Details", new { id = restaurant.Id });
+    }
 }
