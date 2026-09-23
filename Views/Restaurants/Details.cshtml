@@ -68,7 +68,10 @@ else
     </table>
 }
 
-<h2 class="h4 mt-4">Reseñas</h2>
+<div class="d-flex justify-content-between align-items-center mt-4 mb-2">
+    <h2 class="h4 mb-0">Reseñas</h2>
+    <a class="btn btn-sm btn-success" asp-controller="Reviews" asp-action="Create" asp-route-restaurantId="@Model.Id">Escribir reseña</a>
+</div>
 @if (Model.Reviews.Count == 0)
 {
     <p class="text-secondary">Este restaurante todavía no tiene reseñas.</p>

@@ -1,0 +1,36 @@
+@model Review
+@{
+    ViewData["Title"] = "Nueva reseña";
+}
+
+<h1>Nueva reseña</h1>
+<p class="lead">@ViewBag.RestaurantName</p>
+
+<form asp-action="Save" method="post" class="col-lg-8">
+    <input type="hidden" asp-for="RestaurantId" />
+
+    <div class="mb-3">
+        <label class="form-label" asp-for="Rating">Puntuación</label>
+        <select class="form-select" asp-for="Rating">
+            <option value="5">★★★★★ Excelente</option>
+            <option value="4">★★★★ Muy bueno</option>
+            <option value="3">★★★ Normal</option>
+            <option value="2">★★ Flojo</option>
+            <option value="1">★ Malo</option>
+        </select>
+        <span class="text-danger" asp-validation-for="Rating"></span>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label" asp-for="Comment">Comentario</label>
+        <textarea class="form-control" asp-for="Comment" rows="4"></textarea>
+        <span class="text-danger" asp-validation-for="Comment"></span>
+    </div>
+
+    <button class="btn btn-primary" type="submit">Publicar reseña</button>
+    <a class="btn btn-outline-secondary" asp-controller="Restaurants" asp-action="Details" asp-route-id="@Model.RestaurantId">Cancelar</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,29 @@
+@model List<Review>
+@{
+    ViewData["Title"] = "Reseñas";
+}
+
+<h1>Reseñas</h1>
+<p>Hay @Model.Count reseñas.</p>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Fecha</th>
+            <th>Restaurante</th>
+            <th>Puntuación</th>
+            <th>Comentario</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var review in Model)
+        {
+            <tr>
+                <td>@review.Date.ToString("dd/MM/yyyy")</td>
+                <td><a asp-controller="Restaurants" asp-action="Details" asp-route-id="@review.RestaurantId">@review.Restaurant?.Name</a></td>
+                <td class="text-warning">@(new string('★', review.Rating))</td>
+                <td>@review.Comment</td>
+            </tr>
+        }
+    </tbody>
+</table>
