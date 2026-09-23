@@ -1,0 +1,19 @@
+@model Restaurant
+@{
+    ViewData["Title"] = Model.Name;
+}
+
+<h1>@Model.Name</h1>
+
+<dl class="row">
+    <dt class="col-sm-3">Precio medio</dt>
+    <dd class="col-sm-9">@Model.AveragePrice €</dd>
+
+    <dt class="col-sm-3">Empleados</dt>
+    <dd class="col-sm-9">@Model.NumberEmployees</dd>
+
+    <dt class="col-sm-3">Activo</dt>
+    <dd class="col-sm-9">@(Model.Active ? "Sí" : "No")</dd>
+</dl>
+
+<a class="btn btn-secondary" asp-action="Index">Volver al listado</a>

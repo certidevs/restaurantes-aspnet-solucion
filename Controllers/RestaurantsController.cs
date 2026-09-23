@@ -17,4 +17,15 @@ public class RestaurantsController : Controller
         var restaurants = context.Restaurants.ToList();
         return View(restaurants);
     }
+
+    public IActionResult Details(int id)
+    {
+        var restaurant = context.Restaurants.Find(id);
+        if (restaurant == null)
+        {
+            return NotFound();
+        }
+
+        return View(restaurant);
+    }
 }

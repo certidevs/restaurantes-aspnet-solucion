@@ -19,7 +19,7 @@
         @foreach (var restaurant in Model)
         {
             <tr>
-                <td>@restaurant.Name</td>
+                <td><a asp-action="Details" asp-route-id="@restaurant.Id">@restaurant.Name</a></td>
                 <td>@restaurant.AveragePrice €</td>
                 <td>@restaurant.NumberEmployees</td>
                 <td>@(restaurant.Active ? "Sí" : "No")</td>
