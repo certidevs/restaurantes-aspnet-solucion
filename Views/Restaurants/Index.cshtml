@@ -1,0 +1,29 @@
+@model List<Restaurant>
+@{
+    ViewData["Title"] = "Restaurantes";
+}
+
+<h1>Restaurantes</h1>
+<p>Hay @Model.Count restaurantes.</p>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Precio medio</th>
+            <th>Empleados</th>
+            <th>Activo</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var restaurant in Model)
+        {
+            <tr>
+                <td>@restaurant.Name</td>
+                <td>@restaurant.AveragePrice €</td>
+                <td>@restaurant.NumberEmployees</td>
+                <td>@(restaurant.Active ? "Sí" : "No")</td>
+            </tr>
+        }
+    </tbody>
+</table>
