@@ -5,7 +5,10 @@
 
 <div class="d-flex justify-content-between align-items-center mb-3">
     <h1 class="mb-0">Platos</h1>
-    <a class="btn btn-success" asp-action="Create">Nuevo plato</a>
+    @if (User.IsInRole(RoleNames.Admin))
+    {
+        <a class="btn btn-success" asp-action="Create">Nuevo plato</a>
+    }
 </div>
 <p>Hay @Model.Count platos.</p>
 

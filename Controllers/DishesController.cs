@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -37,6 +38,7 @@ public class DishesController : Controller
         return View(dish);
     }
 
+    [Authorize(Roles = RoleNames.Admin)]
     [HttpGet]
     public IActionResult Create(int? restaurantId)
     {
@@ -50,6 +52,7 @@ public class DishesController : Controller
         return View("Form", dish);
     }
 
+    [Authorize(Roles = RoleNames.Admin)]
     [HttpGet]
     public IActionResult Edit(int id)
     {
@@ -63,6 +66,7 @@ public class DishesController : Controller
         return View("Form", dish);
     }
 
+    [Authorize(Roles = RoleNames.Admin)]
     [HttpPost]
     public IActionResult Save(Dish dish)
     {
@@ -87,6 +91,7 @@ public class DishesController : Controller
         return RedirectToAction("Details", new { id = dish.Id });
     }
 
+    [Authorize(Roles = RoleNames.Admin)]
     [HttpPost]
     public IActionResult Delete(int id)
     {
