@@ -22,6 +22,34 @@
     <dd class="col-sm-9">@(Model.Active ? "Sí" : "No")</dd>
 </dl>
 
+<h2 class="h4 mt-4">Carta</h2>
+@if (Model.Dishes.Count == 0)
+{
+    <p class="text-secondary">Este restaurante todavía no tiene platos.</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Plato</th>
+                <th>Tipo</th>
+                <th>Precio</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var dish in Model.Dishes.OrderBy(d => d.Price))
+            {
+                <tr>
+                    <td><a asp-controller="Dishes" asp-action="Details" asp-route-id="@dish.Id">@dish.Name</a></td>
+                    <td>@Html.DisplayFor(m => dish.DishType)</td>
+                    <td>@dish.Price €</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
 <h2 class="h4 mt-4">Empleados</h2>
 @if (Model.Employees.Count == 0)
 {

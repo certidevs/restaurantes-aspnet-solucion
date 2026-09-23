@@ -23,6 +23,7 @@ public class RestaurantsController : Controller
     {
         var restaurant = context.Restaurants
             .Include(r => r.Employees)
+            .Include(r => r.Dishes)
             .FirstOrDefault(r => r.Id == id);
         if (restaurant == null)
         {
