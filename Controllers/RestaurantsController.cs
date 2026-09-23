@@ -63,6 +63,18 @@ public class RestaurantsController : Controller
         return View("Form", restaurant);
     }
 
+    [HttpGet]
+    public IActionResult Edit(int id)
+    {
+        var restaurant = context.Restaurants.Find(id);
+        if (restaurant == null)
+        {
+            return NotFound();
+        }
+
+        return View("Form", restaurant);
+    }
+
     [HttpPost]
     public IActionResult Save(Restaurant restaurant)
     {
@@ -71,7 +83,15 @@ public class RestaurantsController : Controller
             return View("Form", restaurant);
         }
 
-        context.Restaurants.Add(restaurant);
+        if (restaurant.Id == 0)
+        {
+            context.Restaurants.Add(restaurant);
+        }
+        else
+        {
+            context.Restaurants.Update(restaurant);
+        }
+
         context.SaveChanges();
 
         TempData["Message"] = "Restaurante guardado correctamente.";
