@@ -10,6 +10,7 @@
     <thead>
         <tr>
             <th>Nombre</th>
+            <th>Cocina</th>
             <th>Precio medio</th>
             <th>Empleados</th>
             <th>Activo</th>
@@ -20,6 +21,7 @@
         {
             <tr>
                 <td><a asp-action="Details" asp-route-id="@restaurant.Id">@restaurant.Name</a></td>
+                <td>@Html.DisplayFor(m => restaurant.FoodType)</td>
                 <td>@restaurant.AveragePrice €</td>
                 <td>@restaurant.NumberEmployees</td>
                 <td>@(restaurant.Active ? "Sí" : "No")</td>

@@ -7,4 +7,6 @@ public class Restaurant
     public double? AveragePrice { get; set; }
     public bool Active { get; set; }
     public int? NumberEmployees { get; set; }
+    public DateOnly? StartDate { get; set; }
+    public FoodType? FoodType { get; set; }
 }

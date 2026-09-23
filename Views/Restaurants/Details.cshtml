@@ -6,6 +6,12 @@
 <h1>@Model.Name</h1>
 
 <dl class="row">
+    <dt class="col-sm-3">Tipo de cocina</dt>
+    <dd class="col-sm-9">@Html.DisplayFor(m => m.FoodType)</dd>
+
+    <dt class="col-sm-3">Fecha de apertura</dt>
+    <dd class="col-sm-9">@Model.StartDate?.ToString("dd/MM/yyyy")</dd>
+
     <dt class="col-sm-3">Precio medio</dt>
     <dd class="col-sm-9">@Model.AveragePrice €</dd>
 
