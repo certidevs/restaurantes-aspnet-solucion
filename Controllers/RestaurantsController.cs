@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using RestaurantesAspNet.Data;
 
 namespace RestaurantesAspNet.Controllers;
@@ -20,7 +21,9 @@ public class RestaurantsController : Controller
 
     public IActionResult Details(int id)
     {
-        var restaurant = context.Restaurants.Find(id);
+        var restaurant = context.Restaurants
+            .Include(r => r.Employees)
+            .FirstOrDefault(r => r.Id == id);
         if (restaurant == null)
         {
             return NotFound();

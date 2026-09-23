@@ -22,4 +22,32 @@
     <dd class="col-sm-9">@(Model.Active ? "Sí" : "No")</dd>
 </dl>
 
+<h2 class="h4 mt-4">Empleados</h2>
+@if (Model.Employees.Count == 0)
+{
+    <p class="text-secondary">Este restaurante todavía no tiene empleados.</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>DNI</th>
+                <th>Edad</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var employee in Model.Employees)
+            {
+                <tr>
+                    <td>@employee.FirstName @employee.LastName</td>
+                    <td>@employee.Dni</td>
+                    <td>@employee.Age</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
 <a class="btn btn-secondary" asp-action="Index">Volver al listado</a>
