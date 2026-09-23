@@ -102,10 +102,38 @@ public static class DbInitializer
             context.SaveChanges();
         }
 
+        if (!context.Orders.Any())
+        {
+            var demoUser = context.Users.First(u => u.UserName == "user");
+            var casaPepe = context.Restaurants.First(r => r.Name == "Casa Pepe");
+            var croquetas = context.Dishes.First(d => d.Name == "Croquetas de jamón");
+            var paella = context.Dishes.First(d => d.Name == "Paella de marisco");
+            var tarta = context.Dishes.First(d => d.Name == "Tarta de queso");
+
+            var order = new Order
+            {
+                Date = new DateTime(2026, 9, 12, 14, 30, 0),
+                Status = OrderStatus.Completed,
+                TableNumber = 4,
+                NumPeople = 2,
+                Tip = 3,
+                Restaurant = casaPepe,
+                User = demoUser
+            };
+            order.Lines.Add(new OrderLine { Dish = croquetas, Quantity = 1 });
+            order.Lines.Add(new OrderLine { Dish = paella, Quantity = 1 });
+            order.Lines.Add(new OrderLine { Dish = tarta, Quantity = 2 });
+            order.TotalPrice = order.Lines.Sum(l => l.Dish!.Price * l.Quantity) + (order.Tip ?? 0);
+
+            context.Orders.Add(order);
+            context.SaveChanges();
+        }
+
         Console.WriteLine($"Restaurantes en la base de datos: {context.Restaurants.Count()}");
         Console.WriteLine($"Empleados en la base de datos: {context.Employees.Count()}");
         Console.WriteLine($"Platos en la base de datos: {context.Dishes.Count()}");
         Console.WriteLine($"Reseñas en la base de datos: {context.Reviews.Count()}");
+        Console.WriteLine($"Pedidos en la base de datos: {context.Orders.Count()}");
     }
 
     private static async Task EnsureRoleAsync(RoleManager<IdentityRole> roleManager, string roleName)

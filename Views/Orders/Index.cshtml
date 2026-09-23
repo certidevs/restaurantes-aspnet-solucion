@@ -1,0 +1,31 @@
+@model List<Order>
+@{
+    ViewData["Title"] = "Pedidos";
+}
+
+<h1>Pedidos</h1>
+<p>Hay @Model.Count pedidos.</p>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Fecha</th>
+            <th>Restaurante</th>
+            <th>Cliente</th>
+            <th>Estado</th>
+            <th>Total</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var order in Model)
+        {
+            <tr>
+                <td><a asp-action="Details" asp-route-id="@order.Id">@order.Date.ToString("dd/MM/yyyy HH:mm")</a></td>
+                <td>@order.Restaurant?.Name</td>
+                <td>@(order.User?.DisplayName ?? order.User?.UserName)</td>
+                <td>@Html.DisplayFor(m => order.Status)</td>
+                <td>@order.TotalPrice.ToString("0.00") €</td>
+            </tr>
+        }
+    </tbody>
+</table>

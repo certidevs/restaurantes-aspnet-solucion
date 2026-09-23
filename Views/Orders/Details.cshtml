@@ -1,0 +1,61 @@
+@model Order
+@{
+    ViewData["Title"] = "Pedido " + Model.Id;
+}
+
+<h1>Pedido @Model.Id</h1>
+
+<dl class="row">
+    <dt class="col-sm-3">Restaurante</dt>
+    <dd class="col-sm-9"><a asp-controller="Restaurants" asp-action="Details" asp-route-id="@Model.RestaurantId">@Model.Restaurant?.Name</a></dd>
+
+    <dt class="col-sm-3">Cliente</dt>
+    <dd class="col-sm-9">@(Model.User?.DisplayName ?? Model.User?.UserName)</dd>
+
+    <dt class="col-sm-3">Fecha</dt>
+    <dd class="col-sm-9">@Model.Date.ToString("dd/MM/yyyy HH:mm")</dd>
+
+    <dt class="col-sm-3">Estado</dt>
+    <dd class="col-sm-9">@Html.DisplayFor(m => m.Status)</dd>
+
+    <dt class="col-sm-3">Mesa</dt>
+    <dd class="col-sm-9">@Model.TableNumber</dd>
+
+    <dt class="col-sm-3">Comensales</dt>
+    <dd class="col-sm-9">@Model.NumPeople</dd>
+</dl>
+
+<h2 class="h4">Platos</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Plato</th>
+            <th>Precio</th>
+            <th>Cantidad</th>
+            <th>Subtotal</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var line in Model.Lines)
+        {
+            <tr>
+                <td>@line.Dish?.Name</td>
+                <td>@line.Dish?.Price.ToString("0.00") €</td>
+                <td>@line.Quantity</td>
+                <td>@((line.Dish!.Price * line.Quantity).ToString("0.00")) €</td>
+            </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="3" class="text-end">Propina</td>
+            <td>@((Model.Tip ?? 0).ToString("0.00")) €</td>
+        </tr>
+        <tr class="fw-bold">
+            <td colspan="3" class="text-end">Total</td>
+            <td>@Model.TotalPrice.ToString("0.00") €</td>
+        </tr>
+    </tfoot>
+</table>
+
+<a class="btn btn-secondary" asp-action="Index">Volver a los pedidos</a>

@@ -44,6 +44,10 @@
                         <li class="nav-item"><a class='@NavClass("Restaurants")' asp-controller="Restaurants" asp-action="Index">Restaurantes</a></li>
                         <li class="nav-item"><a class='@NavClass("Dishes")' asp-controller="Dishes" asp-action="Index">Platos</a></li>
                         <li class="nav-item"><a class='@NavClass("Reviews")' asp-controller="Reviews" asp-action="Index">Reseñas</a></li>
+                        @if (User.Identity?.IsAuthenticated == true)
+                        {
+                            <li class="nav-item"><a class='@NavClass("Orders")' asp-controller="Orders" asp-action="Index">Pedidos</a></li>
+                        }
                         @if (User.IsInRole(RoleNames.Admin))
                         {
                             <li class="nav-item"><a class='@NavClass("Users")' asp-controller="Users" asp-action="Index">Administración de usuarios</a></li>
