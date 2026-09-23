@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RestaurantesAspNet.Data;
 using RestaurantesAspNet.Models;
+using RestaurantesAspNet.Utilities;
 
 namespace RestaurantesAspNet.Controllers;
 
@@ -19,6 +20,7 @@ public class ReviewsController : Controller
     {
         var reviews = context.Reviews
             .Include(r => r.Restaurant)
+            .Include(r => r.User)
             .OrderByDescending(r => r.Date)
             .ToList();
         return View(reviews);
@@ -50,10 +52,34 @@ public class ReviewsController : Controller
         }
 
         review.Date = DateTime.Now;
+        review.UserId = User.GetRequiredUserId();
         context.Reviews.Add(review);
         context.SaveChanges();
 
         TempData["Message"] = "Gracias por tu reseña.";
+        return RedirectToAction("Details", "Restaurants", new { id = review.RestaurantId });
+    }
+
+    [Authorize]
+    [HttpPost]
+    public IActionResult Delete(int id)
+    {
+        var review = context.Reviews.Find(id);
+        if (review == null)
+        {
+            return NotFound();
+        }
+
+        var isAuthor = review.UserId == User.GetRequiredUserId();
+        if (!isAuthor && !User.IsInRole(RoleNames.Admin))
+        {
+            return Forbid();
+        }
+
+        context.Reviews.Remove(review);
+        context.SaveChanges();
+
+        TempData["Message"] = "Reseña borrada.";
         return RedirectToAction("Details", "Restaurants", new { id = review.RestaurantId });
     }
 }

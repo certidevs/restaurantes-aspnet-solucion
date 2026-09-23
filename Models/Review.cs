@@ -17,4 +17,7 @@ public class Review
 
     public int RestaurantId { get; set; }
     public Restaurant? Restaurant { get; set; }
+
+    public string? UserId { get; set; }
+    public ApplicationUser? User { get; set; }
 }

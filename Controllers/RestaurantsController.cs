@@ -47,7 +47,7 @@ public class RestaurantsController : Controller
         var restaurant = context.Restaurants
             .Include(r => r.Employees)
             .Include(r => r.Dishes)
-            .Include(r => r.Reviews)
+            .Include(r => r.Reviews).ThenInclude(review => review.User)
             .FirstOrDefault(r => r.Id == id);
         if (restaurant == null)
         {
