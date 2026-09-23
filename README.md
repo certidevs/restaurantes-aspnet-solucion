@@ -1,4 +1,23 @@
-# Restaurantes ASP.NET
+# Restaurantes ASP.NET · solución paso a paso
+
+Este repositorio contiene el proyecto Restaurantes tal y como queda **al terminar cada lección** del
+curso. Cada lección tiene un tag: `leccion-03`, `leccion-04`, etc.
+
+Si te has perdido en clase, descarga el ZIP del tag de la última lección que hayas completado, ábrelo en
+VS Code y continúa desde ahí:
+
+```
+https://github.com/certidevs/restaurantes-aspnet-solucion/archive/refs/tags/leccion-NN.zip
+```
+
+Para ver solo lo que cambia en una lección, compara dos tags en GitHub:
+`https://github.com/certidevs/restaurantes-aspnet-solucion/compare/leccion-03...leccion-04`
+
+El proyecto de partida de todo el curso es [certidevs/restaurantes-aspnet](https://github.com/certidevs/restaurantes-aspnet).
+
+---
+
+## Proyecto base
 
 Plantilla de clase para crear paso a paso una aplicación de gestión de restaurantes con
 ASP.NET Core MVC. Incluye la base común de usuarios, login, perfiles, SQLite, Entity
