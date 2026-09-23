@@ -88,9 +88,24 @@ public static class DbInitializer
             context.SaveChanges();
         }
 
+        if (!context.Reviews.Any())
+        {
+            var casaPepe = context.Restaurants.First(r => r.Name == "Casa Pepe");
+            var sushiZen = context.Restaurants.First(r => r.Name == "Sushi Zen");
+            var rincon = context.Restaurants.First(r => r.Name == "El Rincón Asturiano");
+
+            context.Reviews.AddRange(
+                new Review { Comment = "La paella, espectacular. Volveremos.", Rating = 5, Date = new DateTime(2026, 9, 1), Restaurant = casaPepe },
+                new Review { Comment = "Buena comida, pero tardaron en atendernos.", Rating = 3, Date = new DateTime(2026, 9, 5), Restaurant = casaPepe },
+                new Review { Comment = "El mejor sushi de la ciudad.", Rating = 5, Date = new DateTime(2026, 8, 20), Restaurant = sushiZen },
+                new Review { Comment = "Cachopo enorme y muy rico.", Rating = 4, Date = new DateTime(2026, 9, 10), Restaurant = rincon });
+            context.SaveChanges();
+        }
+
         Console.WriteLine($"Restaurantes en la base de datos: {context.Restaurants.Count()}");
         Console.WriteLine($"Empleados en la base de datos: {context.Employees.Count()}");
         Console.WriteLine($"Platos en la base de datos: {context.Dishes.Count()}");
+        Console.WriteLine($"Reseñas en la base de datos: {context.Reviews.Count()}");
     }
 
     private static async Task EnsureRoleAsync(RoleManager<IdentityRole> roleManager, string roleName)

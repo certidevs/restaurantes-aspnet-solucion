@@ -50,6 +50,26 @@ else
     </table>
 }
 
+<h2 class="h4 mt-4">Reseñas</h2>
+@if (Model.Reviews.Count == 0)
+{
+    <p class="text-secondary">Este restaurante todavía no tiene reseñas.</p>
+}
+else
+{
+    <p>Valoración media: <strong>@Model.Reviews.Average(r => r.Rating).ToString("0.0")</strong> de 5 (@Model.Reviews.Count reseñas)</p>
+    <ul class="list-group mb-3">
+        @foreach (var review in Model.Reviews.OrderByDescending(r => r.Date))
+        {
+            <li class="list-group-item">
+                <span class="text-warning">@(new string('★', review.Rating))</span>
+                <span class="text-secondary small ms-2">@review.Date.ToString("dd/MM/yyyy")</span>
+                <p class="mb-0">@review.Comment</p>
+            </li>
+        }
+    </ul>
+}
+
 <h2 class="h4 mt-4">Empleados</h2>
 @if (Model.Employees.Count == 0)
 {
