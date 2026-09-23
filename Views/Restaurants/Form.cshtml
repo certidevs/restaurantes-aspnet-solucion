@@ -6,21 +6,25 @@
 <h1>@ViewData["Title"]</h1>
 
 <form asp-action="Save" method="post" class="col-lg-8">
+    <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
     <input type="hidden" asp-for="Id" />
 
     <div class="mb-3">
         <label class="form-label" asp-for="Name">Nombre</label>
         <input class="form-control" asp-for="Name" />
+        <span class="text-danger" asp-validation-for="Name"></span>
     </div>
 
     <div class="row">
         <div class="col-md-4 mb-3">
             <label class="form-label" asp-for="AveragePrice">Precio medio (€)</label>
             <input class="form-control" asp-for="AveragePrice" type="number" step="0.01" />
+            <span class="text-danger" asp-validation-for="AveragePrice"></span>
         </div>
         <div class="col-md-4 mb-3">
             <label class="form-label" asp-for="NumberEmployees">Empleados</label>
             <input class="form-control" asp-for="NumberEmployees" />
+            <span class="text-danger" asp-validation-for="NumberEmployees"></span>
         </div>
         <div class="col-md-4 mb-3">
             <label class="form-label" asp-for="StartDate">Fecha de apertura</label>
@@ -43,3 +47,7 @@
     <button class="btn btn-primary" type="submit">Guardar</button>
     <a class="btn btn-outline-secondary" asp-action="Index">Cancelar</a>
 </form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

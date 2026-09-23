@@ -66,6 +66,11 @@ public class RestaurantsController : Controller
     [HttpPost]
     public IActionResult Save(Restaurant restaurant)
     {
+        if (!ModelState.IsValid)
+        {
+            return View("Form", restaurant);
+        }
+
         context.Restaurants.Add(restaurant);
         context.SaveChanges();
 
