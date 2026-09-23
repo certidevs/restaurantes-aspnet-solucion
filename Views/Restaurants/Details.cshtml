@@ -25,6 +25,14 @@
     }
 </div>
 
+@if (User.Identity?.IsAuthenticated == true && Model.Active)
+{
+    <form asp-controller="Orders" asp-action="Create" method="post" class="mb-3">
+        <input type="hidden" name="restaurantId" value="@Model.Id" />
+        <button class="btn btn-success" type="submit">Hacer un pedido</button>
+    </form>
+}
+
 <dl class="row">
     <dt class="col-sm-3">Tipo de cocina</dt>
     <dd class="col-sm-9">@Html.DisplayFor(m => m.FoodType)</dd>

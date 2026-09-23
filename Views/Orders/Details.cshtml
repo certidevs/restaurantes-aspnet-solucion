@@ -33,6 +33,7 @@
             <th>Precio</th>
             <th>Cantidad</th>
             <th>Subtotal</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -43,6 +44,16 @@
                 <td>@line.Dish?.Price.ToString("0.00") €</td>
                 <td>@line.Quantity</td>
                 <td>@((line.Dish!.Price * line.Quantity).ToString("0.00")) €</td>
+                <td>
+                    @if (Model.Status != OrderStatus.Completed)
+                    {
+                        <form asp-action="RemoveLine" method="post">
+                            <input type="hidden" name="orderId" value="@Model.Id" />
+                            <input type="hidden" name="lineId" value="@line.Id" />
+                            <button class="btn btn-sm btn-outline-danger" type="submit">Quitar</button>
+                        </form>
+                    }
+                </td>
             </tr>
         }
     </tbody>
@@ -50,12 +61,37 @@
         <tr>
             <td colspan="3" class="text-end">Propina</td>
             <td>@((Model.Tip ?? 0).ToString("0.00")) €</td>
+            <td></td>
         </tr>
         <tr class="fw-bold">
             <td colspan="3" class="text-end">Total</td>
             <td>@Model.TotalPrice.ToString("0.00") €</td>
+            <td></td>
         </tr>
     </tfoot>
 </table>
+
+@if (ViewBag.Dishes != null)
+{
+    <h2 class="h4 mt-4">Añadir platos</h2>
+    <div class="row row-cols-1 row-cols-md-3 g-3 mb-4">
+        @foreach (var dish in (List<Dish>)ViewBag.Dishes)
+        {
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h3 class="h6 card-title">@dish.Name</h3>
+                        <p class="card-text text-secondary small">@Html.DisplayFor(m => dish.DishType) · @dish.Price.ToString("0.00") €</p>
+                        <form asp-action="AddDish" method="post">
+                            <input type="hidden" name="orderId" value="@Model.Id" />
+                            <input type="hidden" name="dishId" value="@dish.Id" />
+                            <button class="btn btn-sm btn-primary" type="submit">Añadir</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
 
 <a class="btn btn-secondary" asp-action="Index">Volver a los pedidos</a>
